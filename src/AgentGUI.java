@@ -1,11 +1,8 @@
 
 
-import jade.core.AID;
 import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
-
-import static com.sun.java.accessibility.util.AWTEventMonitor.addWindowListener;
 
 public class AgentGUI extends JFrame {
     private Main myAgent;
@@ -23,12 +20,12 @@ public class AgentGUI extends JFrame {
         p.add(yField);
         getContentPane().add(p, BorderLayout.CENTER);
 
-        JButton addButton = new JButton("Calculate");
+        JButton addButton = new JButton("Calcular");
         addButton.addActionListener( new ActionListener() {
             public void actionPerformed(ActionEvent ev) {
                 try {
                     int x = Integer.parseInt(yField.getText());
-                    myAgent.doLR(x);
+                    myAgent.sendX(x);
                     yField.setText("");
                 }
                 catch (Exception e) {
@@ -40,23 +37,20 @@ public class AgentGUI extends JFrame {
         p.add(addButton);
         getContentPane().add(p, BorderLayout.SOUTH);
 
-        // Make the agent terminate when the user closes
-        // the GUI using the button on the upper right corner
+
         addWindowListener(new    WindowAdapter() {
             public void windowClosing(WindowEvent e) {
                 myAgent.doDelete();
             }
         } );
 
-        //setResizable(false);
     }
 
     public void showGui() {
         pack();
-        Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
-        int centerX = (int)screenSize.getWidth() / 2;
-        int centerY = (int)screenSize.getHeight() / 2;
-        setLocation(centerX - getWidth() / 2, centerY - getHeight() / 2);
+        this.setSize(new Dimension(300,200));
+        setLocationRelativeTo(null);
+
         super.setVisible(true);
     }
 
